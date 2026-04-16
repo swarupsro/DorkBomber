@@ -1,1 +1,105 @@
-test
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>DorkBomber Recon Deck</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="deck">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="DorkBomber home">
+        <span class="brand-mark">DB</span>
+        <span>
+          <strong>DorkBomber</strong>
+          <small>Passive Recon</small>
+        </span>
+      </a>
+    </header>
+
+    <section class="hero" id="top">
+      <div class="hero-shell">
+        <div class="hero-line">
+          <div class="hero-title">
+            <span>Passive OSINT</span>
+            <strong>Clean dork workflows</strong>
+          </div>
+
+          <form class="target-form" id="scopeForm">
+            <label class="sr-only" for="targetInput">Target scope</label>
+            <div class="command-input">
+              <span>&gt;</span>
+              <input id="targetInput" type="text" autocomplete="off" spellcheck="false" placeholder="example.com, api.example.com">
+            </div>
+            <button type="submit">Run Selected</button>
+          </form>
+
+          <div class="mission-glance">
+            <span>Mission</span>
+            <strong id="signalMission">Leak Hunter</strong>
+            <small id="signalCount">0 actions armed</small>
+          </div>
+        </div>
+
+        <div class="hero-meta">
+          <code><b id="statDorks">0</b> dorks / <b id="statMissions">0</b> missions / <b id="statTargets">0</b> targets</code>
+          <div class="target-chips" id="targetChips" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Recon workspace">
+      <nav class="mission-rail" aria-label="Recon missions">
+        <div class="rail-title">
+          <span>MISSIONS</span>
+          <button type="button" id="resetBtn">reset</button>
+        </div>
+        <div id="missionRail"></div>
+      </nav>
+
+      <section class="operator-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow" id="missionKicker">public leaks and indexed exposure</p>
+            <h2 id="missionTitle">Leak Hunter</h2>
+          </div>
+          <div class="panel-actions">
+            <input id="searchInput" type="search" autocomplete="off" placeholder="filter action, engine, file type">
+            <button class="btn ghost" type="button" id="openSelectedBtn">Open Selected</button>
+            <button class="btn ghost" type="button" id="copyMissionBtn">Copy Pack</button>
+          </div>
+        </div>
+
+        <div class="active-strip">
+          <span id="actionCount">0 visible</span>
+          <span id="activeEngine">Google</span>
+          <span>new tabs only</span>
+        </div>
+
+        <div class="action-list" id="actionList"></div>
+      </section>
+
+      <aside class="query-panel">
+        <div class="query-head">
+          <span>LIVE QUERY</span>
+          <button type="button" id="copySelectedBtn">copy</button>
+        </div>
+        <h3 id="activeTitle">Select an action</h3>
+        <p id="activeDescription">The generated query or pivot URL appears here.</p>
+        <code class="query-output" id="queryOutput">No query selected.</code>
+
+        <div class="helper-head">
+          <span>EXTERNAL PIVOTS</span>
+          <button type="button" id="copyHelpersBtn">copy all</button>
+        </div>
+        <div class="helper-list" id="helperList"></div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
