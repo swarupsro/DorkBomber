@@ -606,6 +606,26 @@ input::placeholder {
   min-height: 32px;
 }
 
+.site-credit {
+  padding: 18px 0 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.site-credit a {
+  color: var(--green);
+  text-decoration: none;
+}
+
+.love-icon {
+  color: var(--green);
+}
+
+.site-credit a:hover {
+  text-decoration: underline;
+}
+
 .empty-state {
   min-height: 140px;
   padding: 18px;
