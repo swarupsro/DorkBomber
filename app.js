@@ -459,7 +459,7 @@ function renderQuery() {
   const queryLabel = ctx.isSample ? "sample query" : "query";
   const openLabel = ctx.isSample ? "sample open" : "open";
   els.queryOutput.textContent = `${queryLabel}:\n${queryText(item, ctx)}\n\n${openLabel}:\n${engineUrl(item, ctx)}`;
-  els.openSelectedBtn.textContent = `Open ${item.engine}`;
+  els.openSelectedBtn.textContent = "Scan Keyword";
 }
 
 function renderHelpers() {
