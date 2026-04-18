@@ -6,7 +6,7 @@ DorkBomber helps you build target-scoped Google dork queries for finding common 
 
 ## Live Demo
 
-Production URL: <https://dork-bomber-git-main-swarup-sahas-projects.vercel.app/>
+Production URL: <https://dork-bomber.vercel.app/>
 
 ## Features
 
