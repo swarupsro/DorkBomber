@@ -56,6 +56,27 @@ const rawDorks = [
   ["download-file", "Download handlers", "Access Points", "Google", "Medium", "Download handlers with file parameters.", "google", "{scope} (inurl:\"download.php?file=\" OR inurl:\"?file=\" OR inurl:\"download=\")"],
   ["open-redirects", "Redirect parameters", "Access Points", "Google", "Medium", "Common redirect parameter names.", "google", "{scope} (inurl:redirect= OR inurl:return= OR inurl:next= OR inurl:url= OR inurl:continue=)"],
   ["setup-files", "Setup and install pages", "Access Points", "Google", "Medium", "Installer, setup, readme, and license files.", "google", "{scope} (inurl:install OR inurl:setup OR inurl:readme OR inurl:license)"],
+  ["common-endpoints", "Common endpoint index", "Endpoint Discovery", "Google", "Info", "API, admin, dashboard, portal, and account routes indexed for the target.", "google", "{scope} (inurl:/api/ OR inurl:/rest/ OR inurl:/v1/ OR inurl:/v2/ OR inurl:/admin/ OR inurl:/dashboard/ OR inurl:/portal/ OR inurl:/account/)"],
+  ["api-docs-expanded", "API docs and consoles", "Endpoint Discovery", "Google", "High", "OpenAPI, Swagger UI, Redoc, and generated API documentation.", "google", "{scope} (inurl:/swagger-ui OR inurl:/swagger/ OR inurl:/api-docs OR inurl:/openapi OR inurl:/redoc OR \"OpenAPI\")"],
+  ["well-known-endpoints", "Well-known endpoints", "Endpoint Discovery", "Google", "Medium", "Security, identity, app link, and key discovery under .well-known.", "google", "{scope} inurl:/.well-known (security.txt OR openid-configuration OR assetlinks.json OR apple-app-site-association OR jwks.json)"],
+  ["endpoint-sitemaps", "Sitemap endpoint hints", "Endpoint Discovery", "Google", "Info", "Sitemaps and robots entries that mention sensitive route families.", "google", "{scope} (inurl:sitemap.xml OR inurl:sitemap_index.xml OR inurl:robots.txt) (api OR admin OR login OR portal OR upload)"],
+  ["js-endpoint-mining", "JavaScript endpoint mining", "Endpoint Discovery", "Google", "Medium", "Client JavaScript that may reveal API routes, GraphQL paths, and request code.", "google", "{scope} (filetype:js OR ext:js) (\"/api/\" OR \"api/v1\" OR \"api/v2\" OR \"graphql\" OR \"fetch(\" OR \"axios\")"],
+  ["source-map-endpoints", "Source map route mining", "Endpoint Discovery", "Google", "Medium", "Source maps and bundled source that may reveal routes and internal API names.", "google", "{scope} (ext:map OR filetype:map) (\"sourcesContent\" OR \"webpack\" OR \"/api/\" OR \"routes\")"],
+  ["parameter-hunting", "Parameterized URLs", "Endpoint Discovery", "Google", "Medium", "Common id, file, page, search, and redirect parameters for manual review.", "google", "{scope} (inurl:\"?id=\" OR inurl:\"?page=\" OR inurl:\"?file=\" OR inurl:\"?category=\" OR inurl:\"?q=\" OR inurl:\"?search=\" OR inurl:\"?redirect=\" OR inurl:\"?url=\")"],
+  ["callback-webhook", "Callback and webhook paths", "Endpoint Discovery", "Google", "Medium", "Callback, webhook, notify, and return URL routes.", "google", "{scope} (inurl:webhook OR inurl:callback OR inurl:notify OR inurl:returnUrl OR inurl:redirect_uri OR inurl:relaystate)"],
+  ["upload-download-combo", "Upload and download paths", "Endpoint Discovery", "Google", "Medium", "Upload, import, export, file manager, and download endpoints.", "google", "{scope} (inurl:upload OR inurl:filemanager OR inurl:import OR inurl:export OR inurl:download OR inurl:attachment)"],
+  ["legacy-script-endpoints", "Legacy script endpoints", "Endpoint Discovery", "Google", "Medium", "Older PHP, ASP, JSP, and CGI endpoints with parameters.", "google", "{scope} (inurl:.php?id= OR inurl:.asp?id= OR inurl:.aspx?id= OR inurl:.jsp?id= OR inurl:/cgi-bin/ OR ext:do OR ext:action)"],
+  ["route-definition-files", "Route definition files", "Endpoint Discovery", "Google", "Medium", "Indexed JSON/YAML route, endpoint, and API definition files.", "google", "{scope} (filetype:json OR filetype:yml OR filetype:yaml OR filetype:txt) (\"routes\" OR \"endpoints\" OR \"openapi\" OR \"swagger\")"],
+  ["admin-subdomains", "Admin and portal subdomains", "Endpoint Discovery", "Google", "Medium", "Common admin, portal, account, user, and login subdomain names.", "google", "{each:(site:admin.$t OR site:portal.$t OR site:login.$t OR site:accounts.$t OR site:user.$t) (intitle:login OR inurl:login)}"],
+  ["staging-subdomains", "Dev and staging subdomains", "Endpoint Discovery", "Google", "Medium", "Development, staging, QA, UAT, and test hostnames in scope.", "google", "{each:(site:dev.$t OR site:staging.$t OR site:test.$t OR site:qa.$t OR site:uat.$t OR site:beta.$t)}"],
+  ["mobile-app-links", "Mobile app link files", "Endpoint Discovery", "Google", "Info", "Android and iOS association files that can reveal app package and route ownership.", "google", "{scope} (inurl:assetlinks.json OR inurl:apple-app-site-association)"],
+  ["auth-basic", "Auth and account routes", "Auth & SSO", "Google", "Low", "Login, sign-up, password reset, and account recovery pages.", "google", "{scope} (inurl:/login OR inurl:/signin OR inurl:/signup OR inurl:/register OR inurl:/password OR inurl:/reset OR inurl:/forgot)"],
+  ["oauth-authorize", "OAuth authorize flows", "Auth & SSO", "Google", "Medium", "OAuth and OpenID authorize endpoints for redirect URI review.", "google", "{scope} (inurl:/oauth/authorize OR inurl:/oauth2/authorize OR inurl:/authorize? OR inurl:/connect/authorize OR inurl:redirect_uri=)"],
+  ["saml-adfs", "SAML and ADFS flows", "Auth & SSO", "Google", "Medium", "SAML, ADFS, wctx, wtrealm, and identity provider routes.", "google", "{scope} (inurl:/adfs/ls OR inurl:SAMLRequest OR inurl:wtrealm OR inurl:wctx OR inurl:/saml OR inurl:/sso) -microsoft.com"],
+  ["oidc-idp", "OIDC and IDP endpoints", "Auth & SSO", "Google", "Medium", "OIDC discovery, authorization, and identity provider paths.", "google", "{scope} (inurl:/.well-known/openid-configuration OR inurl:/oidc/authorize OR inurl:/idp/Authn/UserPassword OR inurl:/idp/prp.wsf OR inurl:/nidp/idff/sso OR inurl:authorization.ping)"],
+  ["logout-callbacks", "Logout and return callbacks", "Auth & SSO", "Google", "Medium", "Return URL, logout redirect, and callback parameters.", "google", "{scope} (inurl:returnUrl= OR inurl:callback= OR inurl:redirect_uri= OR inurl:post_logout_redirect_uri= OR inurl:RelayState=)"],
+  ["service-desk-login", "Service desk portals", "Auth & SSO", "Google", "Medium", "Customer portal, helpdesk, Jira service desk, and support logins.", "google", "{scope} (inurl:\"servicedesk/customer/user/login\" OR inurl:/helpdesk OR inurl:/support/login OR inurl:/jira/servicedesk OR inurl:/customer/user/login)"],
+  ["vpn-web-login", "VPN and web login pages", "Auth & SSO", "Google", "Medium", "VPN, web login, and protected remote access login surfaces.", "google", "{scope} (inurl:/weblogin OR intitle:\"web client: login\" OR intitle:\"Exchange Log In\" OR intitle:\"Xenmobile Console Logon\" OR intitle:\"Please Login\")"],
   ["swagger-openapi", "Swagger and OpenAPI", "Cloud & APIs", "Google", "High", "Swagger UI, OpenAPI specs, and API docs.", "google", "{scope} (inurl:swagger OR inurl:api-docs OR inurl:openapi OR filetype:json \"swagger\")"],
   ["graphql", "GraphQL consoles", "Cloud & APIs", "Google", "High", "GraphQL endpoints and GraphiQL consoles.", "google", "{scope} (inurl:graphql OR inurl:graphiql OR intitle:GraphiQL)"],
   ["api-js", "API paths in JavaScript", "Cloud & APIs", "Google", "Medium", "JavaScript files that reference API paths.", "google", "{scope} (filetype:js OR ext:js) (\"/api/\" OR \"api/v1\" OR \"api/v2\")"],
@@ -72,6 +93,25 @@ const rawDorks = [
   ["prometheus", "Prometheus endpoints", "Infrastructure", "Google", "Medium", "Prometheus graph and target endpoints.", "google", "{scope} (inurl:/graph OR inurl:/targets OR intitle:Prometheus) \"Prometheus\""],
   ["kibana", "Kibana dashboards", "Infrastructure", "Google", "Medium", "Kibana dashboard and app pages.", "google", "{scope} (intitle:Kibana OR inurl:/app/kibana OR inurl:/app/discover)"],
   ["server-status", "Apache server-status", "Infrastructure", "Google", "High", "Apache server-status pages.", "google", "{scope} (inurl:/server-status OR intitle:\"Apache Status\")"],
+  ["web-config-ftp", "web.config FTP references", "Code & Secrets", "Google", "High", "Indexed ASP.NET web.config files with FTP-related configuration.", "google", "{scope} filetype:config inurl:web.config inurl:ftp"],
+  ["iis-log-files", "IIS log disclosure", "Exposure", "Google", "Medium", "IIS log files and server software markers.", "google", "{scope} ext:log \"Software: Microsoft Internet Information Services\""],
+  ["phpmyadmin-dumps", "phpMyAdmin dumps", "Exposure", "Google", "High", "phpMyAdmin SQL dumps and exported database content.", "google", "{scope} (\"phpMyAdmin SQL Dump\" OR \"-- phpMyAdmin SQL Dump --\" OR \"phpMyAdmin MySQL-Dump\") (ext:sql OR ext:txt OR ext:log)"],
+  ["postgres-dumps", "PostgreSQL dumps", "Exposure", "Google", "High", "PostgreSQL dump files and pg_dump export markers.", "google", "{scope} (\"-- Dumped from database version\" OR \"-- Dumped by pg_dump version\") (ext:sql OR ext:txt OR ext:log OR ext:env)"],
+  ["sql-admin-inserts", "Admin SQL inserts", "Exposure", "Google", "High", "SQL dump rows that mention admin table inserts.", "google", "{scope} (\"-- Dumping data for table `admin`\" OR \"-- INSERT INTO `admin`\" OR \"insert into\") (pass OR passwd OR password) (ext:sql OR ext:txt OR ext:log)"],
+  ["db-credential-configs", "Database credential configs", "Code & Secrets", "Google", "High", "YAML, properties, INI, and env files with database connection strings.", "google", "{scope} (filetype:properties OR ext:yml OR ext:yaml OR ext:ini OR ext:env OR ext:txt) (jdbc: OR \"Database Connection Information\" OR \"DB_PASSWORD\" OR \"DATABASE_URL\" OR \"password:\")"],
+  ["wordpress-config-keys", "WordPress config keys", "Code & Secrets", "Google", "High", "WordPress database credentials and auth salts in indexed text files.", "google", "{scope} (\"define('DB_USER',\" OR \"define('DB_PASSWORD',\" OR \"define('SECURE_AUTH_KEY'\" OR \"define('LOGGED_IN_KEY'\") (ext:txt OR ext:cfg OR ext:env OR ext:ini)"],
+  ["rails-laravel-secrets", "Rails and Laravel secrets", "Code & Secrets", "Google", "High", "Rails secret_key_base, Laravel APP_KEY, and debug configuration leaks.", "google", "{scope} (\"secret_key_base:\" OR \"APP_KEY=\" OR \"APP_DEBUG=true\" OR \"Whoops! There was an error\") (ext:env OR ext:yml OR ext:yaml OR ext:txt OR ext:log)"],
+  ["mail-secrets", "Mailer and SMTP secrets", "Code & Secrets", "Google", "High", "Mailer host, SMTP password, and application mail credentials.", "google", "{scope} (\"mailer_password:\" OR \"mailer_host:\" OR \"MAIL_PASSWORD\" OR \"SMTP_PASSWORD\" OR \"smtp_pass\") (ext:yml OR ext:yaml OR ext:env OR ext:txt OR ext:cfg)"],
+  ["keystore-passwords", "Keystore passwords", "Code & Secrets", "Google", "High", "Java keystore password entries in XML or text configuration.", "google", "{scope} \"keystorePass=\" (ext:xml OR ext:txt OR ext:properties OR ext:cfg) -git -gitlab"],
+  ["filezilla-credentials", "FileZilla credential files", "Code & Secrets", "Google", "High", "FileZilla recent servers and site manager files.", "google", "{scope} intitle:\"index of\" (\"filezilla.xml\" OR \"sitemanager.xml\" OR \"recentservers.xml\")"],
+  ["frontpage-pwd", "FrontPage password files", "Code & Secrets", "Google", "High", "Legacy FrontPage password files in indexed service paths.", "google", "{scope} intext:\"-FrontPage-\" ext:pwd inurl:(service OR authors OR administrators OR users)"],
+  ["xdebug-session", "Xdebug session trigger", "Stack", "Google", "Medium", "Indexed Xdebug session start URLs.", "google", "{scope} inurl:?XDEBUG_SESSION_START=phpstorm"],
+  ["xprober-pages", "XProber pages", "Stack", "Google", "High", "Public XProber PHP environment pages.", "google", "{scope} inurl:/xprober ext:php"],
+  ["xampp-htdocs", "XAMPP web roots", "Stack", "Google", "High", "Indexed XAMPP htdocs directories and local web roots.", "google", "{scope} intitle:\"index of\" (\"/xampp/htdocs\" OR \"C:/xampp/htdocs/\")"],
+  ["jboss-default", "JBoss default console", "Stack", "Google", "High", "JBoss welcome and management console pages.", "google", "{scope} intitle:\"Welcome to JBoss\""],
+  ["plesk-default", "Plesk default page", "Infrastructure", "Google", "Low", "Default Plesk-hosted web server pages.", "google", "{scope} intitle:\"Web Server's Default Page\" intext:\"hosting using Plesk\""],
+  ["sonarqube", "SonarQube panels", "Stack", "Google", "High", "Public SonarQube dashboards and project pages.", "google", "{scope} intext:\"SonarQube\" \"by SonarSource SA.\""],
+  ["monsta-ftp", "Monsta FTP login", "Access Points", "Google", "Medium", "Monsta FTP web login pages.", "google", "{scope} intitle:\"Monsta ftp\" intext:\"Lock session to IP\""],
   ["github-secrets", "GitHub indexed secrets", "External Intel", "Google", "High", "Target mentions with secret keywords on GitHub.", "google", "site:github.com \"{first}\" (password OR secret OR token OR apikey OR \"api_key\")"],
   ["gitlab-secrets", "GitLab indexed secrets", "External Intel", "Google", "High", "Target mentions with secret keywords on GitLab.", "google", "site:gitlab.com \"{first}\" (password OR secret OR token OR apikey OR \"api_key\")"],
   ["paste-sites", "Paste site mentions", "External Intel", "Google", "Medium", "Target mentions on paste sites.", "google", "(site:pastebin.com OR site:paste.ee OR site:ghostbin.co) \"{first}\""],
@@ -98,12 +138,28 @@ const helpers = rawHelpers.map(rowToHelper);
 
 const workflows = [
   {
+    id: "endpoints",
+    title: "Endpoint Mapper",
+    kicker: "common routes, docs, parameters, callbacks",
+    brief: "API docs, JS routes, params, uploads, staging.",
+    categories: ["Endpoint Discovery"],
+    priority: ["common-endpoints", "api-docs-expanded", "well-known-endpoints", "js-endpoint-mining", "parameter-hunting", "callback-webhook", "upload-download-combo", "admin-subdomains", "staging-subdomains"]
+  },
+  {
     id: "leaks",
     title: "Leak Hunter",
     kicker: "public leaks and indexed exposure",
     brief: "Config, backups, DB files, logs, secrets.",
     categories: ["Exposure", "Documents", "Code & Secrets"],
-    priority: ["env-files", "config-files", "database-files", "backup-archives", "private-keys", "aws-keys", "api-keys", "sql-errors"]
+    priority: ["env-files", "config-files", "database-files", "backup-archives", "phpmyadmin-dumps", "db-credential-configs", "wordpress-config-keys", "private-keys", "aws-keys", "api-keys", "sql-errors"]
+  },
+  {
+    id: "auth",
+    title: "Auth & SSO",
+    kicker: "login, identity, reset, redirect flows",
+    brief: "Login, OAuth, SAML, OIDC, service desks.",
+    categories: ["Auth & SSO"],
+    priority: ["auth-basic", "oauth-authorize", "saml-adfs", "oidc-idp", "logout-callbacks", "service-desk-login", "vpn-web-login", "admin-subdomains"]
   },
   {
     id: "surface",
@@ -119,7 +175,7 @@ const workflows = [
     kicker: "cms, frameworks, exposed components",
     brief: "WordPress, Drupal, Joomla, Struts, ArcGIS.",
     categories: ["Stack"],
-    priority: ["wordpress", "wp-config-index", "jenkins", "grafana", "phpinfo", "laravel-debug", "django-debug", "struts"]
+    priority: ["wordpress", "wp-config-index", "jenkins", "grafana", "sonarqube", "phpinfo", "xdebug-session", "xprober-pages", "laravel-debug", "django-debug", "struts"]
   },
   {
     id: "apis",
@@ -127,7 +183,7 @@ const workflows = [
     kicker: "api docs, tokens, buckets, client-side endpoints",
     brief: "Swagger, GraphQL, JS APIs, Firebase, cloud buckets.",
     categories: ["Cloud & APIs"],
-    priority: ["swagger-openapi", "graphql", "api-js", "firebase", "cloud-buckets", "jwt-bearer", "azure-strings", "gcp-service-account"]
+    priority: ["swagger-openapi", "api-docs-expanded", "graphql", "api-js", "js-endpoint-mining", "firebase", "cloud-buckets", "jwt-bearer", "azure-strings", "gcp-service-account"]
   },
   {
     id: "entry",
@@ -135,7 +191,7 @@ const workflows = [
     kicker: "login, admin, upload, redirect paths",
     brief: "Login portals, setup files, upload endpoints.",
     categories: ["Access Points"],
-    priority: ["login-pages", "admin-panels", "phpmyadmin", "adminer", "admin-aspx", "upload-forms", "download-file", "open-redirects"]
+    priority: ["login-pages", "admin-panels", "auth-basic", "phpmyadmin", "adminer", "admin-aspx", "service-desk-login", "upload-forms", "download-file", "open-redirects", "monsta-ftp"]
   },
   {
     id: "mentions",
@@ -156,9 +212,9 @@ const workflows = [
 ];
 
 const state = {
-  mission: "leaks",
+  mission: "endpoints",
   search: "",
-  selectedId: "env-files",
+  selectedId: "common-endpoints",
   toastTimer: null
 };
 
@@ -199,7 +255,7 @@ function rowToHelper([id, title, category, description, template, needsTarget]) 
 }
 
 function parseTargets(value, fallback = false) {
-  const raw = value.split(",").map(part => part.trim()).filter(Boolean);
+  const raw = value.split(/[\s,]+/).map(part => part.trim()).filter(Boolean);
   if (!raw.length && fallback) return [sampleTarget];
   return raw.map(normalizeTarget).filter(Boolean).filter((target, index, list) => list.indexOf(target) === index);
 }
@@ -213,14 +269,18 @@ function normalizeTarget(value) {
   } catch {
     target = target.replace(/^[a-z]+:\/\//i, "").split("/")[0].split("?")[0].split("#")[0];
   }
-  return target.replace(/^www\./i, "").replace(/\.$/, "").toLowerCase();
+  const cleaned = target.replace(/^www\./i, "").replace(/\.$/, "").toLowerCase();
+  const isHostname = /^[a-z0-9-]+(\.[a-z0-9-]+)+$/i.test(cleaned);
+  const isIpv4 = /^(\d{1,3}\.){3}\d{1,3}$/.test(cleaned);
+  return isHostname || isIpv4 ? cleaned : "";
 }
 
 function context() {
   const realTargets = parseTargets(els.targetInput.value);
   const targets = realTargets.length ? realTargets : parseTargets("", true);
   const scope = targets.length > 1 ? `(${targets.map(target => `site:${target}`).join(" OR ")})` : `site:${targets[0]}`;
-  return { targets, realTargets, first: targets[0], scope, targetsText: targets.join(" "), hasRealTarget: realTargets.length > 0 };
+  const hasRealTarget = realTargets.length > 0;
+  return { targets, realTargets, first: targets[0], scope, targetsText: targets.join(" "), hasRealTarget, isSample: !hasRealTarget };
 }
 
 function expand(template, ctx) {
@@ -321,6 +381,11 @@ function renderTargets() {
       chip.textContent = target;
       els.targetChips.appendChild(chip);
     });
+  } else {
+    const chip = document.createElement("span");
+    chip.className = "chip empty";
+    chip.textContent = `Previewing ${sampleTarget}. Enter authorized scope before opening or copying.`;
+    els.targetChips.appendChild(chip);
   }
   els.statTargets.textContent = String(ctx.realTargets.length);
 }
@@ -391,7 +456,9 @@ function renderQuery() {
   els.activeTitle.textContent = item.title;
   els.activeDescription.textContent = item.description;
   els.activeEngine.textContent = item.engine;
-  els.queryOutput.textContent = `query:\n${queryText(item, ctx)}\n\nopen:\n${engineUrl(item, ctx)}`;
+  const queryLabel = ctx.isSample ? "sample query" : "query";
+  const openLabel = ctx.isSample ? "sample open" : "open";
+  els.queryOutput.textContent = `${queryLabel}:\n${queryText(item, ctx)}\n\n${openLabel}:\n${engineUrl(item, ctx)}`;
   els.openSelectedBtn.textContent = `Open ${item.engine}`;
 }
 
@@ -419,7 +486,7 @@ function render() {
 
 function requireTarget() {
   if (context().hasRealTarget) return true;
-  showToast("Enter a target domain first.");
+  showToast("Enter an authorized target domain first.");
   els.targetInput.focus();
   return false;
 }
@@ -443,6 +510,7 @@ function openDork(id) {
 }
 
 function copyDork(id) {
+  if (!requireTarget()) return;
   const item = dorks.find(dork => dork.id === id);
   if (item) copyText(queryText(item, context()));
 }
@@ -456,6 +524,7 @@ function openHelper(id) {
 
 function copyHelper(id) {
   const item = helpers.find(helper => helper.id === id);
+  if (item && item.needsTarget && !requireTarget()) return;
   if (item) copyText(expand(item.template, context()));
 }
 
@@ -466,6 +535,7 @@ function selectDork(id, rerender = true) {
 }
 
 function copyMission() {
+  if (!requireTarget()) return;
   const ctx = context();
   const lines = workflowActions().map(item => `${item.title}\n${queryText(item, ctx)}\n${engineUrl(item, ctx)}`);
   if (!lines.length) return showToast("No mission actions to copy.");
@@ -473,6 +543,7 @@ function copyMission() {
 }
 
 function copyHelpers() {
+  if (!requireTarget()) return;
   const ctx = context();
   const lines = helpers.map(item => `${item.title}\n${expand(item.template, ctx)}`);
   copyText(lines.join("\n\n"));
@@ -507,9 +578,9 @@ function escapeHtml(value) {
 }
 
 function resetFilters() {
-  state.mission = "leaks";
+  state.mission = "endpoints";
   state.search = "";
-  state.selectedId = "env-files";
+  state.selectedId = "common-endpoints";
   els.searchInput.value = "";
   render();
 }

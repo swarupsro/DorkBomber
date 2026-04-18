@@ -14,7 +14,7 @@
         <span class="brand-mark">DB</span>
         <span>
           <strong>DorkBomber</strong>
-          <small>Passive Recon</small>
+          <small>Bug Bounty Recon</small>
         </span>
       </a>
     </header>
@@ -31,7 +31,7 @@
             <label class="sr-only" for="targetInput">Target scope</label>
             <div class="command-input">
               <span>&gt;</span>
-              <input id="targetInput" type="text" autocomplete="off" spellcheck="false" placeholder="example.com, api.example.com">
+              <input id="targetInput" type="text" autocomplete="off" spellcheck="false" placeholder="program.com, api.program.com">
             </div>
             <button type="submit">Run Selected</button>
           </form>
@@ -47,6 +47,8 @@
           <code><b id="statDorks">0</b> dorks / <b id="statMissions">0</b> missions / <b id="statTargets">0</b> targets</code>
           <div class="target-chips" id="targetChips" aria-live="polite"></div>
         </div>
+
+        <p class="scope-note"><strong>Scope rule:</strong> use only assets you are authorized to test. DorkBomber builds target-scoped passive queries and opens external search pages; it does not scrape Google or scan hosts.</p>
       </div>
     </section>
 
